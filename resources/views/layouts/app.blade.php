@@ -30,6 +30,8 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
         @include('layouts.navigation')
+        <<<<<<< HEAD=======<x-notify::notify />
+        >>>>>>> d782fbed3d5a8521ca19e4898e523d6542ae1304
         <!-- Page Heading -->
         @isset($header)
         <header class="bg-white dark:bg-gray-800 shadow">
@@ -86,6 +88,7 @@
 
         });
     </script>
+    @notifyJs
 </body>
 
 </html>
