@@ -13,6 +13,8 @@
     <link href="https://fonts.bunny.net/css?family=figtree:400,500,600&display=swap" rel="stylesheet" />
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@24,400,0,0" />
     @notifyCss
+    <x-notify::notify />
+    @notifyJs
     <!-- Scripts -->
     @vite(['resources/css/app.css', 'resources/js/app.js'])
     <script>
@@ -28,8 +30,6 @@
 <body class="font-sans antialiased">
     <div class="min-h-screen bg-gray-100 dark:bg-gray-900">
         @include('layouts.navigation')
-        <x-notify::notify />
-        @notifyJs
         <!-- Page Heading -->
         @isset($header)
         <header class="bg-white dark:bg-gray-800 shadow">
