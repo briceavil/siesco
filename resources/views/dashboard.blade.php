@@ -22,7 +22,7 @@
 
                                         <h4 class="text-xl mb-5 text-center font-bold dark:text-white">Cómo usar el sistema de inscripción escolar SIESCO</h4>
 
-                                        <ul class="space-y-4 text-gray-500 list-disc list-inside dark:text-gray-400">
+                                        <ul class="space-y-4 text-gray-700 list-disc list-inside dark:text-gray-400">
                                             PASO A PASO
                                             <ul class="ps-5 mt-2 space-y-1 list-decimal list-inside">
                                                 <li>Agregar periodo académico</li>
