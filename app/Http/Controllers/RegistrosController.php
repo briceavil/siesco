@@ -232,16 +232,6 @@ class RegistrosController extends Controller
         return redirect()->route('dashboard');
     }
 
-    public function editar_representante($id)
-    {
-        $representante = Representante::find($id);
-        if ($representante) {
-            $representante->fecha_nacimiento = date('m/d/Y', strtotime($representante->fecha_nacimiento));
-            return view('editar.editar_representante', compact('representante'));
-        }
-        notify()->warning('El representante no existe');
-        return redirect()->route('dashboard');
-    }
 
     public function actualizar_docente(Request $request)
     {
@@ -265,6 +255,18 @@ class RegistrosController extends Controller
         notify()->warning('Ha ocurrido un error');
         return redirect()->route('dashboard');
     }
+
+    public function editar_representante($id)
+    {
+        $representante = Representante::find($id);
+        if ($representante) {
+            $representante->fecha_nacimiento = date('m/d/Y', strtotime($representante->fecha_nacimiento));
+            return view('editar.editar_representante', compact('representante'));
+        }
+        notify()->warning('El representante no existe');
+        return redirect()->route('dashboard');
+    }
+
 
     public function actualizar_representante(Request $request)
     {
@@ -294,10 +296,8 @@ class RegistrosController extends Controller
         $clase = Clase::find($id);
         if ($clase) {
             $docentes = Docente::all();
-            $seccion = Seccion::orderBy('seccion', 'asc')->get();
-            $grado = Grado::orderBy('grado', 'asc')->get();
             $periodo = Periodo::latest()->limit(1)->get();
-            return view('editar.editar_clase', compact('periodo', 'seccion', 'grado', 'docentes', 'clase'));
+            return view('editar.editar_clase', compact('periodo', 'docentes', 'clase'));
         }
         notify()->warning('La clase no existe');
         return redirect()->route('dashboard');
@@ -305,29 +305,22 @@ class RegistrosController extends Controller
 
     public function actualizar_clase(Request $request)
     {
-        $claseRequest = Clase::find($request->id);
-        if ($claseRequest) {
+        $clase = Clase::find($request->id);
+        $aula = Clase::where('periodo_id', $clase->periodo_id)->where('id', '!=', $clase->id)->where('aula', $request->aula)->count();
 
-            $clase = Clase::where('grado_id', '=', $request->grado, 'and')->where('seccion_id', '=', $request->seccion, 'and')->where('periodo_id', '=', $request->periodo)->first();
-            $aula = Clase::where('periodo_id', $request->periodo, 'and')->where('aula', $request->aula)->where('aula', '!=', $claseRequest->aula)->first();
-            if (!$aula) {
-                notify()->warning('El aula seleccionada no está disponible');
-                return redirect()->route('crear.clase');
-            }
+        if ($aula > 0) {
+            notify()->warning('El aula seleccionada no está disponible');
+            return redirect()->route('clases.registradas');
+        }
 
-            if (!$clase) {
-                $clase->grado_id = $request->grado;
-                $clase->seccion_id = $request->seccion;
-                $clase->docente_id = $request->docente;
-                $clase->periodo_id = $request->periodo;
-                $clase->aula = strtoupper($request->aula);
-                $clase->turno = $request->turno;
-                $clase->save();
-                notify()->success('La clase fué creada con éxito');
-                return redirect()->route('clases.registradas');
-            }
-            notify()->warning('La clase ya existe');
-            return redirect()->route('crear.clase');
+        if ($aula == 0) {
+            $clase->update([
+                'aula' => strtoupper($request->aula),
+                'turno' => $request->turno,
+                'docente_id' => $request->docente
+            ]);
+            notify()->success('La clase fué actualizada con éxito');
+            return redirect()->route('clases.registradas');
         }
         notify()->warning('Ha ocurrido un error');
         return redirect()->route('dashboard');
@@ -337,7 +330,7 @@ class RegistrosController extends Controller
         $inscritos = Inscripcion::all()->first();
         if ($inscritos) {
             $periodo = Periodo::orderBy('created_at', 'desc')->first();
-            $inscritos = Inscripcion::where('periodo_id', '=', $periodo->id)->paginate(3);
+            $inscritos = Inscripcion::where('periodo_id', '=', $periodo->id)->paginate(5);
             return view('registros.inscritos', compact('inscritos'));
         }
         notify()->warning('No hay alumnos inscritos aún');
@@ -346,19 +339,19 @@ class RegistrosController extends Controller
 
     public function alumnos_registrados()
     {
-        $alumnos = Alumno::orderBy('created_at', 'desc')->paginate(3);
+        $alumnos = Alumno::orderBy('created_at', 'desc')->paginate(5);
         return view('registros.alumnos_registrados', compact('alumnos'));
     }
 
     public function representantes_registrados()
     {
-        $representantes = Representante::orderBy('created_at', 'desc')->paginate(3);
+        $representantes = Representante::orderBy('created_at', 'desc')->paginate(5);
         return view('registros.representantes_registrados', compact('representantes'));
     }
 
     public function docentes_registrados()
     {
-        $docentes = Docente::orderBy('created_at', 'desc')->paginate(3);
+        $docentes = Docente::orderBy('created_at', 'desc')->paginate(5);
         return view('registros.docentes_registrados', compact('docentes'));
     }
 
@@ -367,11 +360,25 @@ class RegistrosController extends Controller
         $registradas = Clase::all()->first();
         if ($registradas) {
             $periodo = Periodo::orderBy('created_at', 'desc')->first();
-            $clases = Clase::where('periodo_id', $periodo->id)->paginate(3);
+            $clases = Clase::where('periodo_id', $periodo->id)->paginate(5);
             return view('registros.clases_registradas', compact('clases'));
         }
         notify()->warning('Aún no hay clases registradas');
         return redirect()->route('dashboard');
+    }
+
+    public function clase_alumnos($id)
+    {
+        $clase = Clase::find($id);
+        if ($clase) {
+            $periodo = Periodo::orderBy('created_at', 'desc')->first();
+            $query_inscritos = Inscripcion::where('periodo_id', $periodo->id)->where('clase_id', $id);
+            $cantidad_inscritos = $query_inscritos->count();
+            $inscritos = $query_inscritos->paginate(5);
+            return view('registros.clase_alumnos', compact('inscritos', 'clase', 'cantidad_inscritos'));
+        }
+        notify()->warning('La clase no existe');
+        return redirect()->route('clases.registradas');
     }
 
     public function periodoAcademico(Request $request)

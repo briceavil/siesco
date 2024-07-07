@@ -151,8 +151,6 @@
         </div>
     </aside>
 
-    <div class="p-4 sm:ml-64">
-        <div class="py-10">
-            {{$slot}}
-        </div>
+    <div class="mt-7 p-4 sm:ml-64">
+        {{$slot}}
     </div>

@@ -1,3 +1,39 @@
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
+
+.slider{
+    width: auto;
+    height: auto;
+    margin:auto;
+    overflow: hidden;
+}
+
+.slider .slide-track{
+    display:flex;
+    animation: scroll 40s linear infinite;
+    width: calc(350px * 12);
+    -webkit-animation: scroll 40s linear infinite;
+}
+
+.slider .slide{
+    width: 100%;
+}
+
+.slider .slide p {
+    width: 100%;
+}
+
+@keyframes scroll {
+    0%{
+        transform: translateX(1000px);
+        -webkit-transform: translateX(1000px);
+
+    }
+
+    100% {
+            transform: translateX(calc(-350px*6));
+            -webkit-transform: translateX(-350px*6);
+    
+        }
+}

@@ -12,10 +12,6 @@ class Clase extends Model
     protected $fillable = ['grado_id', 'seccion_id', 'docente_id', 'aula', 'turno'];
 
 
-    public function alumnos()
-    {
-        return $this->belongsTo(Alumno::class);
-    }
     public function docente()
     {
         return $this->belongsTo(Docente::class);

@@ -6,18 +6,25 @@ use App\Models\Clase;
 use App\Models\Docente;
 use App\Models\Seccion;
 use App\Models\Grado;
+use App\Models\Inscripcion;
 use App\Models\Periodo;
 use App\Models\Representante;
 use Illuminate\Support\Facades\Route;
 use phpDocumentor\Reflection\Types\Void_;
 use SebastianBergmann\Type\VoidType;
+use Illuminate\Support\Carbon;
 
 Route::get('/', function () {
     return view('welcome');
 });
 
 Route::get('/dashboard', function () {
-    return view('dashboard');
+    $periodo = Periodo::orderBy('created_at', 'desc')->select('id', 'inicio', 'fin')->first();
+    $fecha_actual = Carbon::now();
+    $fecha_fin_periodo = Carbon::parse($periodo->fin);
+    $dias_finalizar = round($fecha_actual->diffInDays($fecha_fin_periodo), 0, PHP_ROUND_HALF_UP);
+    $inscritos = Inscripcion::where('periodo_id', $periodo->id)->count();
+    return view('dashboard', compact('inscritos', 'periodo', 'dias_finalizar'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {
@@ -180,12 +187,12 @@ Route::middleware('auth', 'verified')->group(function () {
 //rutas para para mostrar registros
 
 Route::middleware('auth', 'verified')->group(function () {
-
     Route::get('/inscritos', [RegistrosController::class, 'inscritos'])->name('inscritos');
     Route::get('/alumnos/registrados', [RegistrosController::class, 'alumnos_registrados'])->name('alumnos.registrados');
     Route::get('/representantes/registrados', [RegistrosController::class, 'representantes_registrados'])->name('representantes.registrados');
     Route::get('/docentes/registrados', [RegistrosController::class, 'docentes_registrados'])->name('docentes.registrados');
     Route::get('/clases/registradas', [RegistrosController::class, 'clases_registradas'])->name('clases.registradas');
+    Route::get('/clase/{id}/alumnos', [RegistrosController::class, 'clase_alumnos'])->name('clase.alumnos');
 });
 
 require __DIR__ . '/auth.php';

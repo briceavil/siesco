@@ -8,64 +8,57 @@
                             <div class="max-w mx-auto sm:px-6 lg:px-8">
                                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                                     <div class="relative overflow-x-hidden">
-                                        <h4 class="text-xl text-center font-bold dark:text-white">DOCENTES REGISTRADOS</h4>
-                                        <h5 class="text-lime-500 py-5">N° de docentes: {{$docentes->count()}}</h5>
-                                        <table class="mb-5 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
+                                        <h4 class="text-xl mb-5 text-center font-bold dark:text-white"> {{$clase->grado->grado .' sección '. $clase->seccion->seccion}} </h4>
+                                        <h5 class="text-lime-500 py-5">Alumnos inscritos: {{$cantidad_inscritos}}</h5>
+                                        <table class=" mb-5 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                                 <tr>
                                                     <th scope="col" class="text-center px-6 py-4">
-                                                        Nombres
+                                                        Alumno
                                                     </th>
                                                     <th scope="col" class="text-center px-6 py-4">
-                                                        Cédula
+                                                        Docente
                                                     </th>
                                                     <th scope="col" class="text-center px-6 py-4">
-                                                        Dirección
+                                                        Grado
                                                     </th>
                                                     <th scope="col" class="text-center px-6 py-4">
-                                                        fecha de nacimiento
+                                                        Seccion
                                                     </th>
                                                     <th scope="col" class="text-center px-6 py-4">
-                                                        Teléfono
-                                                    </th>
-                                                    <th scope="col" class="text-center px-6 py-4">
-                                                        Editar
+                                                        Periodo académico
                                                     </th>
                                                 </tr>
                                             </thead>
 
                                             <tbody>
 
-                                                @foreach ($docentes as $docente)
-                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-
+                                                @foreach ($inscritos as $inscrito)
+                                                <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700 hover:bg-gray-600">
                                                     <th scope="row" class="text-center px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                                                        <a href="/docentes/editar/{{$docente->id}}">{{$docente->apellido . ' ' . $docente->nombre}}</a>
-                                                    </th>
-
-                                                    <td class="text-center px-6 py-4">
-                                                        {{$docente->cedula}}
-                                                    </td>
-                                                    <td class="text-center px-6 py-4">
-                                                        {{$docente->direccion}}
-                                                    </td>
-                                                    <td class="text-center px-6 py-4">
-                                                        {{$docente->fecha_nacimiento}}
-                                                    </td>
-                                                    <td class="text-center px-6 py-4">
-                                                        {{$docente->telefono}}
-                                                    </td>
-                                                    <td class="text-center px-6 py-4">
-                                                        <a href="/docentes/editar/{{$docente->id}}" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 dark:bg-blue-600 dark:hover:bg-blue-700 focus:outline-none dark:focus:ring-blue-800">
-                                                            Editar
+                                                        <a href="/alumnos/editar/{{$inscrito->alumno->id}}">
+                                                            {{$inscrito->alumno->primer_apellido . ', ' . $inscrito->alumno->primer_nombre}}
                                                         </a>
+                                                    </th>
+                                                    <td class="text-center px-6 py-4">
+                                                        {{$inscrito->clase->docente->apellido .', '. $inscrito->clase->docente->nombre}}
+                                                    </td>
+                                                    <td class="text-center px-6 py-4">
+                                                        {{$inscrito->clase->grado->grado}}
+                                                    </td>
+                                                    <td class="text-center px-6 py-4">
+                                                        {{$inscrito->clase->seccion->seccion}}
+                                                    </td>
+                                                    <td class="text-center px-6 py-4">
+                                                        {{$inscrito->periodo->inicio .' - '. $inscrito->periodo->fin}}
                                                     </td>
                                                 </tr>
                                                 @endforeach
                                             </tbody>
                                         </table>
-                                        <div>{{$docentes->links()}}</div>
-
+                                        <div>
+                                            {{$inscritos->links()}}
+                                        </div>
                                     </div>
                                 </div>
                             </div>

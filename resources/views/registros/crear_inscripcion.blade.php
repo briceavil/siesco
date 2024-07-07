@@ -23,7 +23,7 @@
               @if(session('representante'))
               <div class="relative z-0 w-full mb-5 group">
                 <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Representado</label>
-                <select required name="alumno_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select required name="alumno_id" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                   <option value="" selected disabled>Seleccione al alumno</option>
                   @foreach(session('representante')->alumnos as $item)
                   <option value="<?php echo $item->id ?>">{{$item->primer_apellido .' '. $item->segundo_apellido .', '. $item->primer_nombre .' '. $item->segundo_nombre}}</option>
@@ -34,7 +34,7 @@
 
               <div class="relative z-0 w-full mb-5 group">
                 <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Clase</label>
-                <select required name="clase" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                <select required name="clase" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                   <option value="" selected disabled>Seleccione la clase</option>
                   @foreach($clases as $item)
                   <option value="<?php echo $item->id ?>">{{$item->grado->grado .' - grado sección'. ' '. $item->seccion->seccion .' - ('. $item->docente->nombre .')' }}</option>
@@ -48,7 +48,7 @@
               <div class="grid md:grid-cols md:gap-6">
                 <div class="relative z-0 w-full mb-5 group">
                   <label for="countries" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Periodo</label>
-                  <select name="periodo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500">
+                  <select name="periodo" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" required>
                     <option value="">Seleccione el periódo</option>
                     @foreach($periodo as $item)
                     <option value="<?php echo $item->id ?>">{{$item->inicio .' - '. $item->fin}}</option>

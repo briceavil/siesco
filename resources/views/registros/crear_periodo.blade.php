@@ -6,7 +6,7 @@
           <label for="countries" class="block mb-4 text-2xl font-medium text-gray-900 dark:text-white mb-5">Establecer periodo académico</label>
           @if($periodo)
           <div class="mb-5">
-            <p>El periodo actual del sistema es: <b class="text-green-700">{{$periodo->inicio .' - '. $periodo->fin}}</b></p>
+            <p>El periodo actual del sistema es: <b class="dark:text-lime-500">{{$periodo->inicio .' - '. $periodo->fin}}</b></p>
           </div>
           @elseif(!$periodo)
           <div class="mb-5">

@@ -8,8 +8,8 @@
                             <div class="max-w mx-auto sm:px-6 lg:px-8">
                                 <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
                                     <div class="relative overflow-x-auto">
-
-                                        <h4 class="text-xl mb-5 text-center font-bold dark:text-white">ALUMNOS INSCRITOS</h4>
+                                        <h4 class="text-xl text-center font-bold dark:text-white">ALUMNOS INSCRITOS</h4>
+                                        <h5 class="text-lime-500 py-5">N° de inscritos: {{$inscritos->count()}}</h5>
                                         <table class="mb-5 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
                                             <thead class="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                                                 <tr>
@@ -37,6 +37,7 @@
                                             <tbody>
 
                                                 @foreach ($inscritos as $inscrito)
+                                                <a></a>
                                                 <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
                                                     <th scope="row" class="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                                                         {{$inscrito->alumno->primer_apellido . ' ' . $inscrito->alumno->segundo_apellido .', '. $inscrito->alumno->primer_nombre . ' ' . $inscrito->alumno->segundo_nombre}}
