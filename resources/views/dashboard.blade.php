@@ -26,7 +26,7 @@
 
                                         <ul class="space-y-4 text-gray-700 list-disc list-inside dark:text-gray-400">
                                             PASO A PASO
-                                            <ul class="ps-5 mt-2 space-y-1 list-decimal list-inside">
+                                            <ul class=" ps-5 mt-2 space-y-1 list-decimal list-inside">
                                                 <li>Agregar periodo académico</li>
                                                 <li>Registrar docentes</li>
                                                 <li>Agregar clases</li>

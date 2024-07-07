@@ -6,8 +6,8 @@
                     <div class="border-gray-200 border-dashed rounded-lg dark:border-gray-700">
                         <div class="py-10">
                             <div class="max-w mx-auto sm:px-6 lg:px-8">
-                                <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
-                                    <div class="relative overflow-x-hidden">
+                                <div class="bg-white dark:bg-gray-800 overflow-auto shadow-sm sm:rounded-lg">
+                                    <div class="relative overflow-x-auto">
                                         <h4 class="text-xl text-center font-bold dark:text-white">ALUMNOS REGISTRADOS</h4>
                                         <h5 class="text-lime-500 py-5">N° de alumnos: {{$alumnos->count()}}</h5>
                                         <table class=" mb-5 w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
