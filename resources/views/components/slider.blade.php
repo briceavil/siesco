@@ -14,6 +14,7 @@
             </span>
             <p class="dark:text-lime-500">Periodo académico: {{$periodo->inicio}} / {{$periodo->fin}}</p>
         </div>
+
         <div class="flex mr-7 mr-7">
             <span class="mr-2 dark:text-lime-500 material-symbols-outlined">
                 timer

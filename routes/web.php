@@ -21,10 +21,15 @@ Route::get('/', function () {
 Route::get('/dashboard', function () {
     $periodo = Periodo::orderBy('created_at', 'desc')->select('id', 'inicio', 'fin')->first();
     $fecha_actual = Carbon::now();
-    $fecha_fin_periodo = Carbon::parse($periodo->fin);
-    $dias_finalizar = round($fecha_actual->diffInDays($fecha_fin_periodo), 0, PHP_ROUND_HALF_UP);
-    $inscritos = Inscripcion::where('periodo_id', $periodo->id)->count();
-    return view('dashboard', compact('inscritos', 'periodo', 'dias_finalizar'));
+    //se requiere checar que periodo no sea null porque de lo contrario no se podria accder a sus propiedades y petaria.
+    if ($periodo != null) {
+        $fecha_fin_periodo = Carbon::parse($periodo->fin);
+        $dias_finalizar = round($fecha_actual->diffInDays($fecha_fin_periodo), 0, PHP_ROUND_HALF_UP);
+        $inscritos = Inscripcion::where('periodo_id', $periodo->id)->count();
+        return view('dashboard', compact('inscritos', 'periodo', 'dias_finalizar'));
+    }
+    //Enviar a la vista periodo con valor nulo, la cual esta configurada para no mostrar slider si no se ha definido un periodo
+    return view('dashboard', compact('periodo'));
 })->middleware(['auth', 'verified'])->name('dashboard');
 
 Route::middleware('auth')->group(function () {

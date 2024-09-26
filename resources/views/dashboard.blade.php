@@ -1,6 +1,8 @@
 <x-app-layout>
+    @if($periodo != null)
     <x-slider :inscritos="$inscritos" :dias_finalizar="$dias_finalizar" :periodo="$periodo">
     </x-slider>
+    @endif
     <x-new-dashboard>
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
